@@ -14,8 +14,8 @@
 					>
 				</v-img>
 				<v-card-text>
-						<p class="display-1">{{pro}}</p>
-						<h3>content</h3>
+						<p class="display-1">{{pro.title}}</p>
+						<h3>{{pro.content}}</h3>
 				</v-card-text>
 		</v-card>
 	</div>

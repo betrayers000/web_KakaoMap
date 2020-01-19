@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ProItem v-for="pro in proList" :key="pro" :pro="pro"/>
+        <ProItem v-for="pro in proList" :key="pro.id" :pro="pro"/>
     </div>
 </template>
 
@@ -12,9 +12,12 @@ export default {
     components:{
         ProItem,
     },
+    props:{
+        proList: Array,
+    },
     data:function(){
         return{
-            proList : [1,2,3,4,5,6]
+
         }
     }
 

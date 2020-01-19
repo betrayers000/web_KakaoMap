@@ -4,7 +4,7 @@
 </template>
 
 <script>
-const kakao = window.daum.maps
+const kakao = window.kakao.maps
 
 export default {
     name : "KakaoMap",
