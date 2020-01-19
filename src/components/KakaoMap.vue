@@ -8,9 +8,9 @@ const kakao = window.daum.maps
 
 export default {
     name : "KakaoMap",
-    data: ()=>{
+    data: function(){
         return {
-
+            mapInfo : []
         }
     },
     props:{
@@ -28,13 +28,26 @@ export default {
                 level: 3
             };
             var map = new kakao.Map(container, options)
+            var info = []
+
+            //map click event
+            kakao.event.addListener(map, 'click', function(e){
+                console.log(e)
+                console.log(info)
+                if (info.length != 0){
+                    info.forEach(wd=>{
+                        wd.close()
+                    })
+                    info = []
+                }
+            })
+            // create marker
             if (markers != null){
                 markers.forEach(function(marker){
                     var markerPosition = new kakao.LatLng(marker.lat, marker.lng)
                     var nMarker = new kakao.Marker({
                         position : markerPosition,
                         clickable : true,
-                        text: "1000",
                     })
                     nMarker.setMap(map)
                     var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
@@ -44,18 +57,24 @@ export default {
                         content : iwContent,
                         removable : iwRemoveable
                     });
-
                     // 마커에 클릭이벤트를 등록합니다
                     kakao.event.addListener(nMarker, 'click', function() {
                         // 마커 위에 인포윈도우를 표시합니다
-                        infowindow.open(map, nMarker);  
+                        console.log(this.mapInfo)
+                        if (info.length != 0){
+                            info[0].close()
+                            info = []
+                        }
+                        info.push(infowindow)
+                        info[0].open(map, nMarker);
+                        this.mapInfo = info 
                     });
                 })
             }
             else {
                 console.log(map)
             }
-        }
+        },
     },
     mounted(){
         this.loadMap(this.markers)
